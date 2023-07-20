@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+const db = require('../DB/db');
+
+console.log('Start cleaning up DB...');
+
+db.models.user.find({ 'firstname': { $exists: true }, 'lastname': { $exists: true } })
+    .then(userResults => {
+        console.log('Total', userResults.length, "user documents to clean.");
+        let promises = [];
+
+        userResults.forEach(userDoc => {
+            const userID = userDoc._id;
+
+            const firstName = userDoc.firstname;
+            const lastName = userDoc.lastname;
+
+            const updatePromise = db.models.user.findByIdAndUpdate(userID, { 'firstName': firstName, 'lastName': lastName, $unset: { 'firstname': true, 'lastname': true } }, { new: true });
+
+            promises.push(updatePromise);
+        });
+
+        return Promise.all(promises);
+    })
+    .then(updateResult => {
+        console.log("Cleaned up user names.")
+
+        console.log('Start cleaning up listings\' disabled fields...');
+
+        return db.models.listing.updateMany({ disabled: { $ne: true } }, { disabled: false });
+    })
+    .then(listingResult => {
+        console.log("Cleaned up listing disabled fields.");
+
+        console.log("Start replacing listing image URLs...")
+        return db.models.listing.find({ image: 'imageurl' });
+    })
+    .then(listingResult => {
+        console.log(`Total ${ listingResult.length } image URLs to replace.`);
+
+        let promises = [];
+
+        listingResult.forEach(listing => {
+            const listingID = listing._id;
+            const brand = listing.brand;
+
+            const newImgURL = `http://localhost:8080/static/${brand}.jpeg`;
+
+            const updatePromise = db.models.listing.findByIdAndUpdate(listingID, { image: newImgURL }, { new: true });
+
+            promises.push(updatePromise);
+        });
+
+        return Promise.all(promises);
+    })
+    .then(listingResult => {
+        console.log("Replaced listing photos.");
+    })
+    .catch(error => {
+        console.log('Error cleaning up:', error);
+    })
+    .finally(() => {
+        console.log("DB clean up finished, you can use the system now.");
+        process.exit();
+    });

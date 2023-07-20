@@ -1,0 +1,116 @@
+header {
+    background-color: #C4C4C4;
+
+}
+
+.slider {
+    /* overwrite slider styles */
+    width: 200px;
+}
+
+.BrandDiv {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+}
+
+.advanceDiv {
+    display: inline-block;
+    margin-left:20px;
+    vertical-align: middle;
+    width: 28%;
+
+}
+
+.PriceDiv {
+    display: inline-block;
+    margin-left:20px;
+    vertical-align: middle;
+    width: 28%;
+
+}
+
+.el-dropdown-link {
+    cursor: pointer;
+    color: black;
+    font-size: 30px;
+}
+.el-icon-arrow-down {
+    font-size: 12px;
+}
+
+.block{
+
+    vertical-align: middle;
+}
+
+.bottom {
+    margin-top: 15px;
+    line-height: 12px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
+    max-width: 244.8px;
+    max-height: 240px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.demonstration{
+    vertical-align: middle;
+}
+
+.priceRange{
+    vertical-align: middle;
+}
+
+.SearchItemDiv{
+    margin-left: 50px
+}
+
+.item_title{
+    width:230px; 
+    overflow:hidden; 
+    /* white-space:nowrap;  */
+    text-overflow: ellipsis;
+    max-height: 2.5em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:2;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.copyright {
+    text-align: center;
+    font-size: small;
+    color: gray;
+}
+
+.el-col{
+    max-width: 266px;
+    max-height: 400px;
+    margin: 15px;
+}
+
+.item_info{
+    max-height: 3.5em;
+}
+
+
+
